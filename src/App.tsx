@@ -10,14 +10,22 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <CounterView />
-        <p>
-          <button onClick={() => dispatch(increment())}>Increment</button>
-        </p>
-        <p>
-          <button onClick={() => dispatch(incrementByAmount(5))}>
-            Increment by 5
-          </button>
-        </p>
+        <div
+          style={{
+            border: "1px solid green",
+            marginTop: "1em",
+          }}
+        >
+          <p>App component</p>
+          <p>
+            <button onClick={() => dispatch(increment())}>Increment</button>
+          </p>
+          <p>
+            <button onClick={() => dispatch(incrementByAmount(5))}>
+              Increment by 5
+            </button>
+          </p>
+        </div>
       </header>
     </div>
   )

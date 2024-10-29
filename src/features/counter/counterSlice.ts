@@ -42,7 +42,7 @@ export const counterSlice = createSlice({
     selectCount: counter => counter.value,
     selectCounterValue: createSelector(
       [
-        counter => counter.counterObj.getValue(),
+        counter => counter.counterObj.getterValue,
         counter => counter.dirtyCounter,
       ],
       (value, _) => value,

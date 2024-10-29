@@ -1,9 +1,13 @@
 export default class Counter {
-  value: number = 0
+  private _value: number = 0
   increment(inc: number | undefined) {
-    this.value += inc ?? 1
+    this._value += inc ?? 1
   }
   getValue(): number {
-    return this.value
+    return this._value
+  }
+
+  get getterValue(): number {
+    return this._value
   }
 }
