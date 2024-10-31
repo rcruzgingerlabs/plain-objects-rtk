@@ -5,15 +5,21 @@ import Counter from "./counter"
 export interface CounterSliceState {
   value: number
   status: "idle" | "loading" | "failed"
-  counterObj: Counter
-  dirtyCounter: number
+  // counterObj: Counter
+  counter: {
+    model: Counter
+  }
+  // dirtyCounter: number
 }
 
 const initialState: CounterSliceState = {
   value: 0,
   status: "idle",
-  counterObj: new Counter(),
-  dirtyCounter: 0,
+  // counterObj: new Counter(),
+  counter: {
+    model: new Counter(),
+  },
+  // dirtyCounter: 0,
 }
 
 export const counterSlice = createSlice({
@@ -22,8 +28,10 @@ export const counterSlice = createSlice({
   reducers: create => ({
     increment: create.reducer(state => {
       // state.value += 1
-      state.counterObj.increment(1)
-      state.dirtyCounter += 1
+      // state.counterObj.increment(1)
+      // state.dirtyCounter += 1
+      state.counter.model.increment(1)
+      state.counter = { model: state.counter.model }
     }),
     decrement: create.reducer(state => {
       state.value -= 1
@@ -31,8 +39,10 @@ export const counterSlice = createSlice({
     incrementByAmount: create.reducer(
       (state, action: PayloadAction<number>) => {
         // state.value += action.payload
-        state.counterObj.increment(action.payload)
-        state.dirtyCounter += 1
+        // state.counterObj.increment(action.payload)
+        // state.dirtyCounter += 1
+        state.counter.model.increment(action.payload)
+        state.counter = { model: state.counter.model }
       },
     ),
   }),
@@ -42,8 +52,10 @@ export const counterSlice = createSlice({
     selectCount: counter => counter.value,
     selectCounterValue: createSelector(
       [
-        counter => counter.counterObj.getterValue,
-        counter => counter.dirtyCounter,
+        // counter => counter.counterObj.getterValue,
+        // counter => counter.dirtyCounter,
+        counter => counter.counter.model.getValue(),
+        counter => counter.counter,
       ],
       (value, _) => value,
     ),

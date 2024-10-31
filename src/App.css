@@ -1,4 +1,19 @@
-.App {
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.library {
+  border-right: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 400px
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -36,4 +51,5 @@
   100% {
     transform: translateY(0px);
   }
-}
+} */
+

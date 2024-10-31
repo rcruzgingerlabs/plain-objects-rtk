@@ -1,32 +1,30 @@
+import { useDispatch } from "@/app/store"
+import { createNote } from "@/features/notes/slice"
+import NoteView from "@/components/NoteView"
+import NotesList from "@/components/NotesList"
+import { v4 } from "uuid"
 import "./App.css"
-import { CounterView } from "./features/counter/CounterView"
-import { increment, incrementByAmount } from "./features/counter/counterSlice"
-import { useAppDispatch } from "./app/hooks"
 
 const App = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
+  const handleCreateNoteClick = () => {
+    dispatch(
+      createNote({
+        id: v4(),
+        title: `lorem ipsum - ${Date.now()}`,
+      }),
+    )
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <CounterView />
-        <div
-          style={{
-            border: "1px solid green",
-            marginTop: "1em",
-          }}
-        >
-          <p>App component</p>
-          <p>
-            <button onClick={() => dispatch(increment())}>Increment</button>
-          </p>
-          <p>
-            <button onClick={() => dispatch(incrementByAmount(5))}>
-              Increment by 5
-            </button>
-          </p>
+    <div className="app">
+      <div className="library">
+        <div className="actions">
+          <button onClick={handleCreateNoteClick}>Create note</button>
         </div>
-      </header>
+        <NotesList />
+      </div>
+      <NoteView />
     </div>
   )
 }
