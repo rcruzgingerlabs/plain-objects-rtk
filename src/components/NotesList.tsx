@@ -1,19 +1,14 @@
-import { useDispatch, useSelector } from "@/app/store"
+import { useAppSelector } from "@/app/hooks"
 import { selectNoteEntities } from "@/features/notes/selectors"
-import { setActiveNote } from "@/features/notes/slice"
+import NoteListItem from "@/components/NoteListItem"
 
 export default function NotesList() {
-  const dispatch = useDispatch()
-  const notes = useSelector(selectNoteEntities)
+  const notes = useAppSelector(selectNoteEntities)
 
   return (
     <div>
       {notes.map(note => (
-        <li key={note.id}>
-          <button onClick={() => dispatch(setActiveNote(note.id))}>
-            {note.session?.getTitle()}
-          </button>
-        </li>
+        <NoteListItem key={note.id} id={note.id} />
       ))}
     </div>
   )

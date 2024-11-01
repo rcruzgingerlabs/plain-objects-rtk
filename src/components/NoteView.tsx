@@ -1,11 +1,9 @@
-// import { useDispatch } from "@/app/store"
-import { useSelector } from "@/app/store"
+import { useAppSelector } from "@/app/hooks"
 import { selectActiveNote } from "@/features/notes/selectors"
 import "./NoteView.css"
 
 export default function NoteView() {
-  // const dispatch = useDispatch()
-  const note = useSelector(selectActiveNote)
+  const note = useAppSelector(selectActiveNote)
 
   if (!note) {
     return null

@@ -1,19 +1,16 @@
-import { useDispatch } from "@/app/store"
+import { useAppDispatch } from "@/app/hooks"
 import { createNote } from "@/features/notes/slice"
+import { createFakeTitle } from "@/utils/fake-title"
 import NoteView from "@/components/NoteView"
 import NotesList from "@/components/NotesList"
-import { v4 } from "uuid"
+import CollabManager from "@/collab/manager"
 import "./App.css"
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const handleCreateNoteClick = () => {
-    dispatch(
-      createNote({
-        id: v4(),
-        title: `lorem ipsum - ${Date.now()}`,
-      }),
-    )
+    const session = CollabManager.createNewNote(createFakeTitle())
+    dispatch(createNote(session))
   }
 
   return (

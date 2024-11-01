@@ -1,20 +1,38 @@
-import type Listener from "@/collab/listener"
+import { type NoteId } from "@/features/notes/slice"
+import type SessionListener from "@/collab/listener"
 
 class Session {
   private _title: string
-  private _listeners: Set<Listener>
+  private _id: NoteId
+  private _listeners: Set<SessionListener>
 
-  constructor() {
-    this._title = "lorem ipsum dolor"
+  constructor(id: NoteId, title: string) {
+    this._title = title
+    this._id = id
     this._listeners = new Set()
   }
 
-  addListener(listener: Listener): void {
+  public addListener(listener: SessionListener) {
     this._listeners.add(listener)
   }
 
-  removeListener(listener: Listener): void {
+  public removeListener(listener: SessionListener) {
     this._listeners.delete(listener)
+  }
+
+  public getId(): string {
+    return this._id
+  }
+
+  public getTitle(): string {
+    return this._title
+  }
+
+  public setTitle(title: string): void {
+    if (title !== this._title) {
+      this._listeners.forEach(l => l.onMetadataModified(this))
+    }
+    this._title = title
   }
 }
 
