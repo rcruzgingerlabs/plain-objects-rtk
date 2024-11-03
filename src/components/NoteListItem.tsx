@@ -1,11 +1,8 @@
 import { createFakeTitle } from "@/utils/fake-title"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { type RootState } from "@/app/store"
-import {
-  setActiveNote,
-  updateNoteTitle,
-  type NoteId,
-} from "@/features/notes/slice"
+import { selectNoteEntityById } from "@/features/notes/selectors"
+import { setActiveNote, type NoteId } from "@/features/notes/slice"
 import "./NoteListItem.css"
 
 type NoteListItemProps = {
@@ -17,19 +14,11 @@ export default function NoteListItem({ id }: NoteListItemProps) {
   const noteTitle = useAppSelector((s: RootState) =>
     s.notes.entities[id].session?.getTitle(),
   )
+  const entity = useAppSelector((s: RootState) => selectNoteEntityById(s, id))
   return (
     <li className="notelistitem">
       <button onClick={() => dispatch(setActiveNote(id))}>{noteTitle}</button>
-      <button
-        onClick={() => {
-          dispatch(
-            updateNoteTitle({
-              id,
-              title: createFakeTitle(4),
-            }),
-          )
-        }}
-      >
+      <button onClick={() => entity?.session?.setTitle(createFakeTitle(2))}>
         Update Note Title
       </button>
     </li>
