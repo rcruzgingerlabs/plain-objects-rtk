@@ -6,6 +6,8 @@ import {
 } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { notesSlice } from "@/features/notes/slice"
+import createSagaMiddleware from "redux-saga"
+import rootSaga from "@/features/notes/sagas"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -13,6 +15,8 @@ const rootReducer = combineSlices(notesSlice)
 
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
+
+const sagaMiddleware = createSagaMiddleware()
 
 // The store setup is wrapped in `makeStore` to allow reuse
 // when setting up tests that need the same store config
@@ -24,10 +28,11 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     middleware: getDefaultMiddleware => {
       return getDefaultMiddleware({
         serializableCheck: false,
-      })
+      }).concat(sagaMiddleware)
     },
     preloadedState,
   })
+  sagaMiddleware.run(rootSaga)
   // configure listeners using the provided defaults
   // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
   setupListeners(store.dispatch)

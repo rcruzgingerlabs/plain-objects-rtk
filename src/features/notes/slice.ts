@@ -21,11 +21,13 @@ const initialState: NotesSliceState = {
   activeNoteId: undefined,
 }
 
+export type CreateNoteAction = PayloadAction<NoteSession>
+
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
   reducers: create => ({
-    createNote: create.reducer((state, action: PayloadAction<NoteSession>) => {
+    createNote: create.reducer((state, action: CreateNoteAction) => {
       const id = action.payload.getId()
       const session = action.payload
       state.ids.push(id)
@@ -37,7 +39,16 @@ export const notesSlice = createSlice({
     setActiveNote: create.reducer((state, action: PayloadAction<NoteId>) => {
       state.activeNoteId = action.payload
     }),
+    triggerNoteEntityUpdate: create.reducer(
+      (state, action: PayloadAction<NoteId>) => {
+        const entity = state.entities[action.payload]
+        state.entities[action.payload] = {
+          ...entity,
+        }
+      },
+    ),
   }),
 })
 
-export const { createNote, setActiveNote } = notesSlice.actions
+export const { createNote, setActiveNote, triggerNoteEntityUpdate } =
+  notesSlice.actions
