@@ -1,14 +1,14 @@
 import { useAppSelector } from "@/app/hooks"
-import { selectNoteEntities } from "@/features/notes/selectors"
 import NoteListItem from "@/components/NoteListItem"
+import { type RootState } from "@/app/store"
 
 export default function NotesList() {
-  const notes = useAppSelector(selectNoteEntities)
+  const ids = useAppSelector((s: RootState) => s.notes.ids)
 
   return (
     <div>
-      {notes.map(note => (
-        <NoteListItem key={note.id} id={note.id} />
+      {ids.map(id => (
+        <NoteListItem key={id} id={id} />
       ))}
     </div>
   )
