@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { notesSlice } from "@/features/notes/slice"
+import { notesMiddleware } from "@/features/notes/middleware"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -24,7 +25,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     middleware: getDefaultMiddleware => {
       return getDefaultMiddleware({
         serializableCheck: false,
-      })
+      }).concat(notesMiddleware)
     },
     preloadedState,
   })
