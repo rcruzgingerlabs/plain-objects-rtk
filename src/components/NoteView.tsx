@@ -12,7 +12,6 @@ export default function NoteView() {
   if (!activeNoteId) {
     return null
   }
-
   return (
     <main className="noteview">
       <div className="notetitle">{noteTitle}</div>
