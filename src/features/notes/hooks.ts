@@ -9,9 +9,7 @@ export function useNoteTitleById(id: NoteId) {
   let session: Session | undefined = CollabManager.getOpenSession(id)
   let listener: SessionListener = {
     onMetadataModified: _ => {
-      console.log(`onMetadataModified - ${Date.now()}`)
       if (callback) {
-        console.log("callback")
         callback()
       }
     },
