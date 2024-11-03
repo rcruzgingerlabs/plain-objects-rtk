@@ -21,6 +21,11 @@ const initialState: NotesSliceState = {
   activeNoteId: undefined,
 }
 
+export type UpdateNotePayload = {
+  id: NoteId
+  title: string
+}
+
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -37,7 +42,21 @@ export const notesSlice = createSlice({
     setActiveNote: create.reducer((state, action: PayloadAction<NoteId>) => {
       state.activeNoteId = action.payload
     }),
+    updateNoteTitle: create.reducer(
+      (state, action: PayloadAction<UpdateNotePayload>) => {
+        const entity = state.entities[action.payload.id]
+        if (entity) {
+          entity.session?.setTitle(action.payload.title)
+          if (entity.session) {
+            // NOTE: This is a hack
+            state.entities[action.payload.id] = {
+              ...entity,
+            }
+          }
+        }
+      },
+    ),
   }),
 })
 
-export const { createNote, setActiveNote } = notesSlice.actions
+export const { createNote, setActiveNote, updateNoteTitle } = notesSlice.actions
