@@ -17,11 +17,7 @@ export default function NoteListItem({ id }: NoteListItemProps) {
   return (
     <li className="notelistitem">
       <button onClick={() => dispatch(setActiveNote(id))}>{noteTitle}</button>
-      <button
-        onClick={() => {
-          entity?.session?.setTitle(createFakeTitle(2))
-        }}
-      >
+      <button onClick={() => entity?.session?.setTitle(createFakeTitle(2))}>
         Update Note Title
       </button>
     </li>
