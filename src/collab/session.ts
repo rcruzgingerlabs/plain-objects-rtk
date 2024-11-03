@@ -30,9 +30,9 @@ class Session {
 
   public setTitle(title: string): void {
     if (title !== this._title) {
+      this._title = title
       this._listeners.forEach(l => l.onMetadataModified(this))
     }
-    this._title = title
   }
 }
 
