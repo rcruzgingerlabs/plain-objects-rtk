@@ -8,7 +8,7 @@ import type SessionListener from "@/collab/listener"
 const [getTitleByKey$, emitNoteTitleByKey] = createKeyedSignal<NoteId, string>()
 
 export function useNoteTitleById(id: NoteId) {
-  const session = CollabManager.getOpenSession(id)
+  const session = useMemo(() => CollabManager.getOpenSession(id), [id])
   const [useNoteTitle] = useMemo(
     () => bind(() => getTitleByKey$(id), session?.getTitle()),
     [id, session],
